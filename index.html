@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Genshin Impact Materials Progress</title>
+   <link rel="icon" href="icono de pagina.webp" type="image/webp">
+    <meta name="description" content="Track your character and weapon ascension materials progress" />
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-content">
+                <h1>⤿✦ Genshin Impact 'Materials' </h1>
+                <p class="text-muted-foreground">Track your character and weapon ascension materials</p>
+            </div>
+            <button class="btn-primary" id="addButton">Add Item</button>
+        </div>
+
+        <!-- Filter Tabs -->
+        <div class="filter-section">
+            <div class="filter-buttons">
+                <button class="btn-filter active" data-filter="all">All Items</button>
+                <button class="btn-filter" data-filter="character-5">5★ Characters</button>
+                <button class="btn-filter" data-filter="character-4">4★ Characters</button>
+                <button class="btn-filter" data-filter="weapon-5">5★ Weapons</button>
+                <button class="btn-filter" data-filter="weapon-4">4★ Weapons</button>
+                <button class="btn-filter" data-filter="pyro">Pyro</button>
+                <button class="btn-filter" data-filter="hydro">Hydro</button>
+                <button class="btn-filter" data-filter="dendro">Dendro</button>
+                <button class="btn-filter" data-filter="geo">Geo</button>
+                <button class="btn-filter" data-filter="cryo">Cryo</button>
+                <button class="btn-filter" data-filter="anemo">Anemo</button>
+                <button class="btn-filter" data-filter="electro">Electro</button>
+                <button class="btn-filter" data-filter="in-progress">In Progress</button>
+                <button class="btn-filter" data-filter="completed">Completed</button>
+            </div>
+        </div>
+
+        <!-- In Progress Section -->
+        <div class="section">
+            <div class="section-header">
+                <h2>In Progress</h2>
+                <span class="items-count" id="inProgressCount">0 items</span>
+            </div>
+            <div class="materials-container" id="inProgressContainer">
+                <!-- Items will be loaded here -->
+            </div>
+        </div>
+
+        <!-- Completed Section -->
+        <div class="section">
+            <div class="section-header">
+                <h2>Completed</h2>
+                <span class="items-count" id="completedCount">0 items</span>
+            </div>
+            <div class="materials-container" id="completedContainer">
+                <!-- Items will be loaded here -->
+            </div>
+        </div>
+
+        <!-- Add Item Modal -->
+        <div class="modal" id="addModal">
+            <div class="modal-content">
+                <h2 id="modalTitle">Add New Item</h2>
+                <form id="addForm">
+                    <input type="text" name="name" id="itemName" placeholder="Name" required />
+                    
+                    <select name="type" id="itemType" required>
+                        <option value="">Select Type</option>
+                        <option value="character">Character</option>
+                        <option value="weapon">Weapon</option>
+                    </select>
+                    
+                    <select name="rarity" id="itemRarity" required>
+                        <option value="">Select Rarity</option>
+                        <option value="5">5 Star</option>
+                        <option value="4">4 Star</option>
+                    </select>
+                    
+                    <select name="element" id="itemElement" style="display: none;">
+                        <option value="">Select Element</option>
+                        <option value="pyro">Pyro</option>
+                        <option value="hydro">Hydro</option>
+                        <option value="dendro">Dendro</option>
+                        <option value="geo">Geo</option>
+                        <option value="cryo">Cryo</option>
+                        <option value="anemo">Anemo</option>
+                        <option value="electro">Electro</option>
+                    </select>
+                    
+                    <div class="file-input-container">
+                        <label for="imageFile" class="file-input-label">
+                            <span>📷 Choose Image (JPG, PNG, SVG...)</span>
+                        </label>
+                        <input type="file" id="imageFile" name="imageFile" class="file-input" accept="image/*" />
+                        <div id="filePreview" class="file-preview-container" style="display: none;">
+                            <img id="previewImage" class="file-preview" />
+                            <div id="fileName" class="file-name"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="level-selector" id="levelSelector" style="display: none;">
+                        <label>Ascension Level:</label>
+                        <div class="level-inputs">
+                            <select name="currentLevel" id="currentLevel">
+                                <option value="1">1</option>
+                                <option value="20">20</option>
+                                <option value="40">40</option>
+                                <option value="50">50</option>
+                                <option value="60">60</option>
+                                <option value="70">70</option>
+                                <option value="80">80</option>
+                                <option value="90">90</option>
+                            </select>
+                            <span>→</span>
+                            <select name="targetLevel" id="targetLevel">
+                                <option value="20">20</option>
+                                <option value="40">40</option>
+                                <option value="50">50</option>
+                                <option value="60">60</option>
+                                <option value="70">70</option>
+                                <option value="80">80</option>
+                                <option value="90">90</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="material-category">
+                        <label>
+                            <input type="checkbox" name="ascensionMaterials" id="ascensionMaterials" checked>
+                            Include Ascension Materials
+                        </label>
+                        <label id="talentMaterialsLabel" style="display: none;">
+                            <input type="checkbox" name="talentMaterials" id="talentMaterials">
+                            Include Talent Materials
+                        </label>
+                    </div>
+                    
+                    <textarea name="notes" id="itemNotes" placeholder="Notes (optional)"></textarea>
+                    
+                    <div class="modal-buttons">
+                        <button type="submit" class="btn-primary" id="submitButton">Add Item</button>
+                        <button type="button" class="btn-cancel" id="cancelButton">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Edit Materials Modal -->
+        <div class="modal" id="editMaterialsModal">
+            <div class="modal-content">
+                <h2>Edit Materials</h2>
+<div class="materials-catalog">
+    <div class="catalog-categories">
+        <button type="button" class="catalog-tab active" data-category="ascension-gems">Ascension Gems</button>
+        <button type="button" class="catalog-tab" data-category="weekly-boss">Weekly Boss Drops</button>
+        <button type="button" class="catalog-tab" data-category="normal-boss">Normal Boss Drops</button>
+        <button type="button" class="catalog-tab" data-category="elite-drops">Elite Drops</button>
+        <button type="button" class="catalog-tab" data-category="general-drops">General Drops</button>
+        <button type="button" class="catalog-tab" data-category="local-specialties">Local Specialties</button>
+        <button type="button" class="catalog-tab" data-category="talent-books">Talent Books</button>
+        <button type="button" class="catalog-tab" data-category="others">Others</button>
+    </div>
+    <div class="catalog-content">
+        <div id="catalogMaterials" class="catalog-materials-grid">
+            <!-- Catalog items will appear here -->
+        </div>
+    </div>
+</div>
+<div class="current-materials-section">
+    <h3>Current Materials</h3>
+    <div id="materialsEditor" class="current-materials-grid">
+        <!-- Current materials will appear here -->
+    </div>
+    <button type="button" class="btn-add-from-catalog">+ Add from catalog</button>
+</div>
+                <div class="modal-buttons">
+                    <button type="button" class="btn-primary" id="saveMaterialsButton">Save Changes</button>
+                    <button type="button" class="btn-cancel" id="cancelMaterialsButton">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
