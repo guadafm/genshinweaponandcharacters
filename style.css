@@ -1031,3 +1031,46 @@ body {
     border-color: var(--primary);
     background-color: var(--muted);
 }
+.add-new-material {
+  background-color: #f0f9ff !important;
+  border: 2px dashed var(--primary) !important;
+}
+
+.add-new-material:hover {
+  background-color: #e0f2fe !important;
+}
+
+.add-icon {
+  background-color: var(--primary) !important;
+  color: white !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 24px !important;
+  font-weight: bold !important;
+}
+
+.remove-catalog-material {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background-color: red;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  font-size: 12px;
+  cursor: pointer;
+  display: none;
+}
+
+.catalog-material-item {
+  position: relative;
+}
+
+.catalog-material-item:hover .remove-catalog-material {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
